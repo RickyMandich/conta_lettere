@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Test{
     public static void main(String[] args) throws FileNotFoundException{
@@ -10,6 +11,7 @@ public class Test{
         }
         order(conteggio);
         print(conteggio);
+        write(conteggio);
     }
 
     public static Lettera[] conta(char c, Lettera[] conteggio){
@@ -41,6 +43,39 @@ public class Test{
 
     public static void order(Lettera[] conteggio){
         boolean scambio = true;
+        while(scambio){
+            scambio = false;
+            for(int i=0;i<conteggio.length-1;i++){
+                if(conteggio[i].lettera>conteggio[i+1].lettera){
+                    scambia(conteggio, i, i+1);
+                    scambio = true;
+                }
+            }
+        }
+    }
 
+    public static void scambia(Lettera[] conteggio, int i, int j){
+        Lettera temp = conteggio[i];
+        conteggio[i] = conteggio[j];
+        conteggio[j] = temp;
+    }
+
+    public static void write(Lettera[] conteggio){
+        java.io.FileWriter writer = null;
+        try {
+            writer = new java.io.FileWriter("conteggioLettere");
+            for(Lettera l:conteggio){
+                if(l.lettera == '\n') writer.append("a capo");
+                else if(l.lettera == ' ') writer.append("spazio");
+                else writer.append(l.lettera);
+                writer.append("," + l.volte + "\n");
+            }
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                writer.close();
+            } catch (IOException ignore){}
+        }
     }
 }

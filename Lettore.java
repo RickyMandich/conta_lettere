@@ -28,7 +28,7 @@ public class Lettore{
 
         String row = "";
         for(String stringa:tabel){
-            row = row.concat(stringa);
+            row = row.concat(stringa + "\n");
         }
         return row;
     }
